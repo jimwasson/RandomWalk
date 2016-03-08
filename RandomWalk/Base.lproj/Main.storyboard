@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RandomMovement" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,8 +16,81 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6U-yB-wdV">
+                                <rect key="frame" x="26" y="57" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="4Yf-U1-baF"/>
+                                    <constraint firstAttribute="height" constant="30" id="M0w-hR-vCj"/>
+                                </constraints>
+                                <state key="normal" title="Replay"/>
+                                <connections>
+                                    <action selector="btnReplaySaved:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JJh-Xb-HEn"/>
+                                </connections>
+                            </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9h-Yt-ZCt">
+                                <rect key="frame" x="20" y="95" width="560" height="485"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ao8-Ef-zwu">
+                                <rect key="frame" x="255" y="57" width="90" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="mDB-f8-k0I"/>
+                                    <constraint firstAttribute="width" constant="90" id="pvD-IN-zJM"/>
+                                </constraints>
+                                <state key="normal" title="Reset Map"/>
+                                <connections>
+                                    <action selector="btnResetMapDisplay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rhs-fW-PRA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufe-Av-2J0">
+                                <rect key="frame" x="516" y="57" width="69" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="d4G-cc-isG"/>
+                                    <constraint firstAttribute="width" constant="69" id="lr2-Jk-mVk"/>
+                                </constraints>
+                                <state key="normal" title="Start New"/>
+                                <connections>
+                                    <action selector="btnStartNew:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FOp-oG-SVk"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Random Walk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Coj-kA-idv">
+                                <rect key="frame" x="20" y="28" width="560" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="1PU-k2-Ucj"/>
+                                    <constraint firstAttribute="width" constant="160" id="IjN-yh-is5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.89019607840000003" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="IjN-yh-is5"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.14901960784313725" green="0.22745098039215686" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ao8-Ef-zwu" firstAttribute="centerY" secondItem="D6U-yB-wdV" secondAttribute="centerY" id="0fD-NY-P2E"/>
+                            <constraint firstItem="ao8-Ef-zwu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8DB-0x-hNY"/>
+                            <constraint firstAttribute="trailing" secondItem="Coj-kA-idv" secondAttribute="trailing" constant="20" id="9fd-aW-5Id"/>
+                            <constraint firstItem="D6U-yB-wdV" firstAttribute="top" secondItem="Coj-kA-idv" secondAttribute="bottom" constant="8" id="A9p-NG-DJQ"/>
+                            <constraint firstItem="F9h-Yt-ZCt" firstAttribute="top" secondItem="D6U-yB-wdV" secondAttribute="bottom" constant="8" id="ABR-8l-Np6"/>
+                            <constraint firstAttribute="trailing" secondItem="Ufe-Av-2J0" secondAttribute="trailing" constant="15" id="KsC-0h-re9"/>
+                            <constraint firstItem="F9h-Yt-ZCt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Ocm-XX-7fc"/>
+                            <constraint firstAttribute="trailing" secondItem="F9h-Yt-ZCt" secondAttribute="trailing" constant="20" id="Wpi-EY-ZEf"/>
+                            <constraint firstItem="Coj-kA-idv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="YUf-sv-lge"/>
+                            <constraint firstItem="D6U-yB-wdV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="26" id="ldi-uO-JfM"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="F9h-Yt-ZCt" secondAttribute="bottom" constant="20" id="mEd-vs-a4y"/>
+                            <constraint firstItem="Ufe-Av-2J0" firstAttribute="baseline" secondItem="ao8-Ef-zwu" secondAttribute="baseline" id="nXi-bo-U1e"/>
+                            <constraint firstItem="Coj-kA-idv" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="nYg-Yk-LCE"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnReplay" destination="D6U-yB-wdV" id="X6a-1h-aHl"/>
+                        <outlet property="lblStatus" destination="Coj-kA-idv" id="ery-Xj-i7E"/>
+                        <outlet property="mapView" destination="F9h-Yt-ZCt" id="eOD-LU-SoD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

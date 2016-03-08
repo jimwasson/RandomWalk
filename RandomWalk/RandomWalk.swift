@@ -1,27 +1,26 @@
 //
-//  ViewController.swift
+//  RandomWalk.swift
 //  RandomMovement
 //
-//  Created by Jim Wasson on 3/6/16.
+//  Created by Jim Wasson on 3/7/16.
 //  Copyright © 2016 Jim Wasson. All rights reserved.
 //
 
-import UIKit
-import MapKit
+import Foundation
 import CoreLocation
 
 
-class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+// Implemented as a singleton.
+// Access the singleton from anywhere using RandomWalk.sharedInstance.
+class RandomWalk {
 
-    @IBOutlet weak var lblStatus: UILabel!
-
-    @IBOutlet weak var btnReplay: UIButton!
-
-    @IBOutlet weak var mapView: MKMapView!
+    // Singleton class constant (requires Swift 1.2 or later).
+    static let sharedInstance = RandomWalk()
+    // Make init() private so it can't be used -- can only use as a singleton.
+    private init() {}
 
     // Our local CoreLocation Manager instance.
     var locationManager = CLLocationManager()
-
     // Latitude and longitude deltas in degrees to give us a 100 mile region to display on the map.
     // For latitude, 1 degree is always 69 miles. So our latitude delta is 100.0 / 69.0 = 1.44928 degrees.
     // Longitude is also 69 miles per degree but it varies by latitude and is adjusted when we get a
@@ -53,33 +52,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     var randomLocations:[[String:Double]] = [[:]]
     // The maximum number of random locations to store.
     var randomLocationsMax = 48
-
-    // Drop an annotation on the map for a random location entry.
-    // index is the index of the location entry in randomLocations.
-    func setRandomLocationAnnotation(location:CLLocationCoordinate2D, index:Double) {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location
-        annotation.title = "# \(Int(index))"
-        //annotation.subtitle = "Time:"
-        mapView.addAnnotation(annotation)
-    }
-
-    // Clear all of the random location map annotations and their saved location information.
-    func clearRandomLocationAnnotations() {
-        // MKMapView stores all of its annotations internally in mapView.annotations array.
-        // Gather all of the annotations related to our userLocation into an array.
-        let ourAnnotations = mapView.annotations.filter { $0 !== mapView.userLocation }
-        // Remove all of "our" annotations from mapView.
-        self.mapView.removeAnnotations(ourAnnotations)
-        // Remove all entries in the randomLocations array.
-        self.randomLocations.removeAll(keepCapacity: true)
-        self.randomLocations = [[:]] // Reinitialize it with a single empty dictionary entry.
-        // Update NSUserDefaults.
-        self.saveLocations()
-    }
-
-    // MARK: Location Manager functions.
-
+    
     // Generate a new random location and store it in the randomLocations array.
     // Uses movementDeltaMax to set the maximum distance to move from the last location.
     // Locations are saved with a datetime (NSDate) and the latitude and longitude.
@@ -107,10 +80,10 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             // Add the new location to randomLocations. Just directly add as we know it's empty.
             self.randomLocations.append(locationEntry)
             // Display the location on the map.
-            setRandomLocationAnnotation(newLocation, index: 0)
-            // Display location info.
-            let info = "Random Walk #\(Int(entryNumber)) Lat: \(String(format:"%.2f", newLocation.latitude)) Lon: \(String(format:"%.2f", newLocation.longitude))"
-            self.lblStatus.text = info
+//            setRandomLocationAnnotation(newLocation, index: 0)
+//            // Display location info.
+//            let info = "Random Walk #\(Int(entryNumber)) Lat: \(String(format:"%.2f", newLocation.latitude)) Lon: \(String(format:"%.2f", newLocation.longitude))"
+//            self.lblStatus.text = info
         } else {
             // Generate a random distance to move from movementDeltaMin to movementDeltaMax.
             var distanceToMove = Double(arc4random_uniform(UInt32(self.movementDeltaMax)))
@@ -139,10 +112,10 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
                 // Add the new location to randomLocations. addNewLocation() accounts for the maximum length.
                 self.addNewLocation(locationEntry, lastLocation: lastLocation)
                 // Display the location on the map.
-                setRandomLocationAnnotation(newLocation, index: newId)
-                // Display location info.
-                let info = "Random Walk #\(Int(newId)) Lat: \(String(format:"%.2f", newLocation.latitude)) Lon: \(String(format:"%.2f", newLocation.longitude))"
-                self.lblStatus.text = info
+//                setRandomLocationAnnotation(newLocation, index: newId)
+//                // Display location info.
+//                let info = "Random Walk #\(Int(newId)) Lat: \(String(format:"%.2f", newLocation.latitude)) Lon: \(String(format:"%.2f", newLocation.longitude))"
+//                self.lblStatus.text = info
             }
         }
     }
@@ -250,7 +223,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         self.longitudeDelta = longDelta
 
         // Set up and display the map view.
-        setupMapView()
+//        setupMapView()
     }
 
     // CLLocationManager Delegate function.
@@ -258,71 +231,4 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     func locationManager(manager:CLLocationManager, didFailWithError error:NSError) {
         print("Location Manager Error: \(error)")
     }
-
-    // Set up and display the map view. Creates the region and displays the map.
-    // Uses the saved location and delta values. Can be used to conveniently reset the map whenever we need to.
-    func setupMapView() {
-        // Create the span
-        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(self.userLocation.coordinate.latitude,
-            self.userLocation.coordinate.longitude)
-
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(self.latitudeDelta, self.longitudeDelta)
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
-        let fittedRegion = mapView.regionThatFits(region)
-        mapView.setRegion(fittedRegion, animated: true)
-    }
-
-    // Replay the last saved random positions.
-    @IBAction func btnReplaySaved(sender: AnyObject) {
-        generateRandomLocation()
-    }
-
-    // Reset the map if it has been scrolled, panned, zoomed, etc.
-    @IBAction func btnResetMapDisplay(sender: AnyObject) {
-        setupMapView()
-    }
-
-    // Clear the map of all location annotations and start over.
-    @IBAction func btnStartNew(sender: AnyObject) {
-        // Clear the random location annotations.
-        self.clearRandomLocationAnnotations()
-        // Update our current position and start anew.
-        locationManager.startUpdatingLocation()
-    }
-
-    // MARK: Utility functions.
-
-    // Initialization function called one time as part of the application startup process.
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Initialize the CLLocation Manager instance.
-        // Set ourselves as the CLLocationManagerDelegate.
-        locationManager.delegate = self
-        // Set the desired accuracy to be the best available.
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-
-        // Set the map view to show our own location.
-        // Shows the location with the familiar pulsating blue dot.
-        mapView.showsUserLocation = true
-        mapView.showsScale = true
-
-        // Starts the location manager updating our current location.
-        // The delegate functions didUpdateLocations (for a location) or
-        // didFailWithError (for an error) will be called.
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-    }
-
-    // setStatusBarStyle() deprecated in iOS 9. This is now how to set the status bar
-    // style, override and return the desired style. Also works in iOS 8.
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }
-

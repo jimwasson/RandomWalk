@@ -14,6 +14,7 @@
 		EE3EC7E21C8F9245002323D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE3EC7E01C8F9245002323D0 /* LaunchScreen.storyboard */; };
 		EE3EC7ED1C8F9245002323D0 /* RandomWalkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EC7EC1C8F9245002323D0 /* RandomWalkTests.swift */; };
 		EE3EC7F81C8F9245002323D0 /* RandomWalkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EC7F71C8F9245002323D0 /* RandomWalkUITests.swift */; };
+		EE3EC8061C8F929C002323D0 /* RandomWalk.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EC8051C8F929C002323D0 /* RandomWalk.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		EE3EC7F31C8F9245002323D0 /* RandomWalkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RandomWalkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE3EC7F71C8F9245002323D0 /* RandomWalkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWalkUITests.swift; sourceTree = "<group>"; };
 		EE3EC7F91C8F9245002323D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE3EC8051C8F929C002323D0 /* RandomWalk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomWalk.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				EE3EC7D71C8F9244002323D0 /* AppDelegate.swift */,
 				EE3EC7D91C8F9244002323D0 /* ViewController.swift */,
+				EE3EC8051C8F929C002323D0 /* RandomWalk.swift */,
 				EE3EC7DB1C8F9245002323D0 /* Main.storyboard */,
 				EE3EC7DE1C8F9245002323D0 /* Assets.xcassets */,
 				EE3EC7E01C8F9245002323D0 /* LaunchScreen.storyboard */,
@@ -258,6 +261,7 @@
 			files = (
 				EE3EC7DA1C8F9244002323D0 /* ViewController.swift in Sources */,
 				EE3EC7D81C8F9244002323D0 /* AppDelegate.swift in Sources */,
+				EE3EC8061C8F929C002323D0 /* RandomWalk.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
