@@ -140,7 +140,7 @@ class RandomWalk: NSObject, CLLocationManagerDelegate {
     // Calls generateRandomLocation().
     private func startUpdateTimer() {
         if self.locationUpdateTimer.valid == false {
-            self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.updateTimeInterval, target: self, selector: Selector("generateRandomLocation"), userInfo: nil, repeats: true)
+            self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.updateTimeInterval, target: self, selector: #selector(RandomWalk.generateRandomLocation), userInfo: nil, repeats: true)
         }
     }
 
@@ -154,7 +154,7 @@ class RandomWalk: NSObject, CLLocationManagerDelegate {
     // Calls replaySavedLocations().
     private func startReplayTimer() {
         if self.replayUpdateTimer.valid == false {
-            self.replayUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.replayTimeInterval, target: self, selector: Selector("replaySavedLocations"), userInfo: nil, repeats: true)
+            self.replayUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.replayTimeInterval, target: self, selector: #selector(RandomWalk.replaySavedLocations), userInfo: nil, repeats: true)
         }
     }
 
@@ -269,7 +269,7 @@ class RandomWalk: NSObject, CLLocationManagerDelegate {
                 self.rwDelegate?.randomLocation(id, latitude: latitude, longitude: longitude)
             }
             // Set index for the next entry.
-            self.replayIndex++
+            self.replayIndex += 1
         } else {
             // Last one was replayed.
             self.stopReplayTimer()
@@ -294,7 +294,7 @@ class RandomWalk: NSObject, CLLocationManagerDelegate {
             // Find the lowest ID number element to replace.
             var lowestId = DBL_MAX //1000000000.0
             var lowestIndex = 0
-            for var ndx in 0..<self.randomLocations.count {
+            for ndx in 0..<self.randomLocations.count {
                 if let id = self.randomLocations[ndx]["id"] {
                     if id < lowestId {
                         lowestId = id
